@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Nuevo Componente
+{% endblock titulo %}
+    
+
+{% block contenido %}
+    <div class= "color_seccion">
+        <h2 class="titulo-formulario">Nuevo Componente</h2> 
+        {% if form.errors or componentes_form.errors%}
+            <div class="alert alert-warning">
+                {{form.errors}} 
+                {{componentes_form.errors}}
+            </div>
+        {% endif %}
+    
+
+        <form method="post" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <!--{{form.as_p}}
+            {{actividad_form.as_p}}-->
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_nombre_componente">Nombre de componente:</label>
+                        {% if form.nombre_componente.value %}
+                            <input class="form-control input-form" type="text" name="nombre_componente" required maxlength="60" id="id_nombre_componente"   value="{{form.nombre_componente.value}}" placeholder="Nombre del componente">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="nombre_componente" required maxlength="60" id="id_nombre_componente" placeholder="Nombre del componente">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+         
+
+            <div class="div-centrado">
+                <button type="submit" class="btn-form">Crear componente</button>
+            </div>
+        </form>
+    </div>               
+                
+{% endblock contenido %}
+
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+{% endblock scripts %}

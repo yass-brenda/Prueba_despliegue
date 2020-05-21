@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block titulo %}
+   Actividades
+{% endblock titulo %}
+    
+
+{% block contenido %}
+<div class= "color_seccion">
+    <div>
+        <h1 class="titulo-formulario">Actividad <a href="{% url "agregar_actividad" id %}" class="btn-form-derecha">Agregar Actividad</a></h1>
+        
+    </div>
+        
+
+    
+    
+    {% if error %}
+        <div class="alert alert-danger">
+            {{error}}
+        </div>
+    {% endif %}
+        
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead class="fondo-tabla">
+                <th class="col-sm-1">Nombre</th>
+                <th class="col-sm-1">Unidad medida presupuestal</th>
+                <th class="col-sm-1">Cantidad</th>
+                <th class="col-sm-1">Recurso disponible</th>
+            </thead>
+            <tbody>
+                {% for actividad in actividades %}
+                    <tr>
+                        <td>{{actividad.nombre_actividad}}</td>
+                        <td>{{actividad.unidad_medida_presupuestal}}</td>
+                        <td>{{actividad.cantidad}}</td>
+                        <td>{{actividad.recurso_disponible}}</td>
+                    </tr>
+                {% endfor %}
+                    
+            </tbody>
+        </table>
+    </div>
+
+    
+    <div class="pagination div-centrado">
+        <span class="step-links">
+    
+            {% if page.has_previous %}
+                <a href="?page=1" class="btn-paginator">&laquo; Primera página</a>
+                <a href="?page={{ page.previous_page_number }}" class="btn-paginator">Página anterior</a>
+            {% endif %}
+            
+            <span class="current">
+                Página {{ page.number }} de {{ page.paginator.num_pages }}
+            </span>
+    
+            {% if page.has_next %}
+                <a href="?page={{ page.next_page_number }}" class="btn-paginator">Siguiente página</a>
+                <a href="?page={{ page.paginator.num_pages }}" class="btn-paginator">Última página &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock contenido %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Detalles de Actividad
+{% endblock titulo %}
+
+{% block contenido %}
+    <div class="color_seccion">
+        <h2 class="titulo-formulario">
+                Detalles de Actividad
+        </h2>
+
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--{{form.as_p}}-->
+            <div class="form-group">
+                <label for="id_lbl_programa">Programa: </label>
+                <label class="aex"><strong id="id_programa"> {{ object.programa }}</strong></label>
+            </div>
+            <div class="form-group">
+                <label for="id_lbl_nombre">Nombre del Componente: </label>
+                <label class="aex"><strong id="id_nombre">{{ object.nombre }}</strong></label>
+            </div>
+            <div class="form-group">
+                <label for="id_lbl_recurso">Recurso: </label>
+                <label class="aex"><strong id="id_presupuesto">${{ object.presupuesto }}</strong></label>
+            </div>
+            <div class="form-group">
+                <label for="id_lbl_responsable">Responsable: </label>
+                <label class="aex"><strong id="id_responsable"> {{ object.responsable }}</strong></label>
+            </div>
+            <div class="form-group">
+                <label for="id_lbl_estatus">Estatus: </label>
+                <label class="aex"><strong id="id_estatus"> {{ object.estatus_valor}}</strong></label>
+            </div>
+            <div class="div-centrado">
+                {% if programa %}
+                    <a href="{% url "lista_programa_actividades" programa.id %}" class="btn-form">Regresar</a>
+                    <a href="{% url "editar_programa_actividad" programa.id actividad.id %}" class="btn-form-azul">Editar</a>
+                {% else %}
+                    <a href="{% url "lista_actividades" %}" class="btn-form">Regresar</a>
+                    <a href="{% url "editar_actividad" actividad.id %}" class="btn-form-azul">Editar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock contenido %}
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+{% endblock scripts %}

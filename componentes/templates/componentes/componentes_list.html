@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block titulo %}
+   Componentes
+{% endblock titulo %}
+    
+
+{% block contenido %}
+<div class= "color_seccion">
+    <h2 class="titulo-formulario">Componentes </h2>
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+           
+            <thead class="fondo-tabla">
+                <th>Nombre</th>
+                <th>Ver Actividades</th></td>
+                <th>Editar</th>
+                <th>Desactivar/Reactivar</th>
+            </thead>
+            <tbody>
+                
+                {% for componente in object_list%}
+                    <tr>
+                        <td>{{componente.nombre_componente}}</td>
+                        <td>
+                                <a href="{% url "lista_actividad" componente.id %}" class="btn-form-chico">Actividades</a>
+                                
+                        </td>
+                        <td>
+                                <a href="{% url "editar_componentes" componente.id %}" class="btn-form-azul-chico">Editar</a>
+                                
+                        </td>
+                        <td>
+                            
+                            {% if componente.activo %}
+                                <a href="{% url "desactivar_componentes" componente.id %}" class="btn-form-rojo-chico">Desactivar</a>
+                                {% else %}
+                                <a href="{% url "activar_componentes" componente.id %}" class="btn-form-verde-chico">Activar</a>
+                            {% endif %}
+                                
+                                
+                                
+                        </td>
+                    </tr>
+                {% endfor %}
+                    
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="pagination div-centrado">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn-paginator">&laquo; Primera página</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn-paginator">Página anterior</a>
+            {% endif %}
+    
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn-paginator">Siguiente página</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-paginator">Última página &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+</div>
+{% endblock contenido %}

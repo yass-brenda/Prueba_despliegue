@@ -1,0 +1,210 @@
+
+.redondeado{
+    border-radius: 30px;
+    background-color: #6EC64A;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+.btn-form-derecha{
+    border-radius: 30px;
+    background-color: #F89634;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-bottom: 40px;
+
+    position: relative;
+    float: right;
+    
+
+}
+
+.btn-paginator{
+    border-radius: 20px;
+    background-color: #F89634;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    color: white;
+    font-size: 10pt;
+
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+
+.div-login{
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-bottom: 0px;
+    margin-left: 32%;
+    margin-right: 32%;
+    padding-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .div-login {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+.div-centrado{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.div-principal{
+    background-color: gray;
+}
+
+.bienvenido{
+    font-size: 20pt;
+    margin: 10px;
+}
+
+.input-login{
+    border-radius: 20px;
+}
+
+.input-form{
+    border-radius: 20px;
+}
+
+.btn-form{
+    border-radius: 30px;
+    background-color: #F89634;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.btn-form-rojo{
+    border-radius: 30px;
+    background-color: #a71d2a;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.btn-form-verde{
+    border-radius: 30px;
+    background-color: #00ad5f;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.btn-form-azul{
+    border-radius: 30px;
+    background-color: #007bff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    color: white;
+    font-size: 14pt;
+
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.btn-form-chico{
+    border-radius: 30px;
+    background-color: #F89634;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    color: white;
+    font-size: 11pt;
+}
+
+.btn-form-azul-chico{
+    border-radius: 30px;
+    background-color: #007bff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    color: white;
+    font-size: 11pt;
+}
+
+.btn-form-rojo-chico{
+    border-radius: 30px;
+    background-color: #a71d2a;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    color: white;
+    font-size: 11pt;
+}
+
+.btn-form-verde-chico{
+    border-radius: 30px;
+    background-color: #00ad5f;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    color: white;
+    font-size: 11pt;
+}
+
+.fondo-tabla{
+    background-color: #F89634;
+}
+
+.titulo-formulario{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: white;
+}
+
+.header-tabla-centrado{
+    text-align:center;
+}

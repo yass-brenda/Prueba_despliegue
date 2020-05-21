@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Actividades
+{% endblock titulo %}
+    
+{% block contenido %}
+    <div class="color_seccion">
+        <h2 class="aex" >
+            Actividades
+            {% if programa %}
+                de {{programa.nombre}}
+            {% endif %}
+        </h2>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p id="mensaje">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="table-responsive table--no-card m-b-30">
+            <table class="table table-borderless table-striped table-earning">
+                <thead class="fondo-tabla">
+                    <th STYLE="text-align: center">Nombre</th>
+                    <th STYLE="text-align: center">Programa</th>
+                    <th STYLE="text-align: center">Responsable</th>
+                    <th STYLE="text-align: center">Estatus</th>
+                    <th STYLE="text-align: center">Opciones</th>
+                </thead>
+                <tbody>
+                    {% for actividad in object_list %}
+                        <tr>
+                            <td>{{actividad.nombre}}</td>
+                            <td>{{actividad.programa}}</td>
+                            <td>{{actividad.responsable}}</td>
+                            <td>{{actividad.estatus_valor}}</td>
+                            <td STYLE="justify-content: center; display: flex;">
+                                {% if programa %}
+                                    {% if actividad.estatus_valor == "Activo"%}
+                                        <a href="{% url "desactivar_programa_actividad" programa.id actividad.id %}" class="btn-form-rojo-chico" style="margin: 5px;">Desactivar</a>
+                                    {% else %}
+                                        <a href="{% url "reactivar_programa_actividad" programa.id actividad.id %}" class="btn-form-verde-chico" style="margin: 5px;">Reactivar</a>
+                                    {% endif %}
+                                    <a id="btn_detalles"  href="{% url "ver_programa_actividad" programa.id actividad.id %}" class="btn-form-chico" style="margin: 5px;">Ver</a>
+                                    <a id="btn_editar" href="{% url "editar_programa_actividad" programa.id actividad.id %}" class="btn-form-verde-chico" style="margin: 5px;">Editar</a>
+                                {% else %}
+                                    {% if actividad.estatus_valor == "Activo"%}
+                                        <a href="{% url "desactivar_actividad" actividad.id %}" class="btn-form-rojo-chico" style="margin: 5px;">Desactivar</a>
+                                    {% else %}
+                                        <a href="{% url "reactivar_actividad" actividad.id %}" class="btn-form-verde-chico" style="margin: 5px;">Reactivar</a>
+                                    {% endif %}
+                                    <a id="btn_detalles"  href="{% url "ver_actividad" actividad.id %}" class="btn-form-chico" style="margin: 5px;">Ver</a>
+                                    <a id="btn_editar" href="{% url "editar_actividad" actividad.id %}" class="btn-form-azul-chico" style="margin: 5px;">Editar</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        {% if programa %}
+            <div class="div-centrado form-group">
+                <a id="btn_nuevo" href="{% url "nueva_programa_actividad" programa.id  %}" class="btn-form-verde-chico"><i class="zmdi zmdi-plus" ></i> Nueva</a>
+                <a id="btn_regresa_programa" href="{% url "lista_programa" %}" class="btn-form-chico">Regresar</a>
+            </div>
+        {% endif %}
+        <div class="pagination div-centrado">
+            <span class="step-links">
+
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="btn btn-light btn-sm">1 <<</a>
+                    {% if page_obj.number != 2 %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-light btn-sm">p. Anterior</a>
+                    {% endif %}
+
+                {% endif %}
+                Página {{ page_obj.number }} de {{page_obj.paginator.num_pages}}
+                {% if page_obj.has_next %}
+                    {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-light btn-sm">p. Siguiente</a>
+                    {% endif %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-light btn-sm">>> {{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock contenido %}

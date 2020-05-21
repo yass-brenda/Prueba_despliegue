@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Nueva Actividad
+{% endblock titulo %}
+    
+
+{% block contenido %}
+<div class="color_seccion">
+    <h2 class="titulo-formulario">Nueva Actividad</h2>
+    {% if form.errors or actividad_form.errors%}
+            <div class="alert alert-warning">
+                {{form.errors}} 
+                {{actividad_form.errors}}
+            </div>
+    {% endif %}
+            <form method="post" class="form" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="id_nombre_actividad">Nombre Actividad</label>
+                            {% if form.nombre_actividad.value %}
+                                <input class="form-control input-form" type="text" name="nombre_actividad" required maxlength="60" id="id_nombre_actividad"   value="{{form.nombre_actividad.value}}" placeholder="Nombre actividad">
+                            {% else %}
+                                <input class="form-control input-form" type="text" name="nombre_actividad" required maxlength="60" id="id_nombre_actividad" placeholder="Nombre actividad">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_unidad_medida_presupuestal">Unidad de medida presupuestal</label>
+                        {% if form.nombre_actividad.value %}
+                            <input class="form-control input-form" type="text" name="unidad_medida_presupuestal" id="id_unidad_medida_presupuestal"  value="{{form.unidad_medida_presupuestal.value}}" placeholder="Unidad medida presupuestal">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="unidad_medida_presupuestal" id="id_unidad_medida_presupuestal" placeholder="Unidad medida presupuestal">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_cantidad">Cantidad</label>
+                        {% if form.nombre_actividad.value %}
+                            <input class="form-control input-form" type="number" name="cantidad" value="{{form.cantidad.value}}" required id="id_cantidad" placeholder="0">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="cantidad" required id="id_cantidad" placeholder="0">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_recurso_disponible">Recurso disponible</label>
+                        {% if form.recurso_disponible.value %}
+                            <input class="form-control input-form" type="number" name="recurso_disponible" value="{{form.recurso_disponible.value}}" required step="0.01" required id="id_recurso_disponible" placeholder="0">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_disponible"  required step="0.01" required id="id_recurso_disponible" placeholder="0.0">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="div-centrado">
+            <button type="submit" class="btn-form">Agregar Actividad</button>
+            <input type="hidden" name="id_componentes" value="{{id}}">
+        </div>
+    </form>
+</div>
+{% endblock contenido %}
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+{% endblock scripts %}
+
+    

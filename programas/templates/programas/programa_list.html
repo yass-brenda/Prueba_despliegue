@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Lista de Programas
+{% endblock titulo %}
+    
+{% block contenido %}
+<div class= "color_seccion">
+    <h2 class="titulo-formulario">Programas</h2>
+    <!--<h2 class="aex" >Programas</h2>-->
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p id="mensaje">{{ message }}</p>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <!--<thead class="thead-dark">-->
+            <thead class="fondo-tabla">
+                <!--<th>ID Programa</th>-->
+                <th>Nombre del Programa</th>
+                <th>Año<br>Ejercicio<br>Fiscal</th>
+                <th>Recurso<br>Asignado</th>
+                <th>Fuente</th>
+                <!--<th class="col-sm-1">Estatus</th>-->
+                <th class="header-tabla-centrado">Opciones</th>
+            </thead>
+            <tbody>
+                {% for programa in object_list %}
+                    <tr>
+                        <!--<td>{{programa.id}}</td>-->
+                        <td>{{programa.nombre}}</td>
+                        <td>{{programa.anio_ejercicio_fiscal}}</td>
+                        <td>{{programa.recurso_asignado}}</td>
+                        <td>{{programa.fuente}}</td>
+                        <!--<td>{{programa.status}}</td>-->
+                        <td>
+                            {% if programa.status == "ACT" or programa.status == "Act"%}
+                            
+                            <a href="{% url "desactivar_programa" programa.id %}" class="btn-form-rojo-chico">Desactivar</a>
+                            
+                            {% else %}
+                            
+                            <a href="{% url "reactivar_programa" programa.id %}" class="btn-form-verde-chico">Reactivar</a>
+                            
+                            {% endif %}
+                            <!--<a href="{% url "desactivar_programa" programa.id %}" class="btn btn-danger btn-sm">Desactivar</a>-->
+                            <a href="{% url "editar_programa" programa.id %}" class="btn-form-azul-chico">Editar</a>
+                            <a href="{% url "lista_programa_actividades" programa.id %}" class="btn-form-chico">Actividades</a>
+                        </td>
+                    </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="pagination div-centrado">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn-paginator">&laquo; Primera página</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn-paginator">Página anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn-paginator">Siguiente página</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-paginator">Última página &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+</div>
+{% endblock contenido %}

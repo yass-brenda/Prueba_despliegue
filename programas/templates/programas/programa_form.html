@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Crear nuevo programa
+{% endblock titulo %}
+
+{% block contenido %}
+    <!--<h2 class="aex">Nuevo Programa</h2>-->
+    <div class="color_seccion">
+        <h2 class="titulo-formulario">Nuevo programa</h2>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p id="mensaje">{{message}}</p>
+                </div>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!--{form.errors or programa_form.errors or partida_form.errors or metas_esperadas_form.errors or metas_reales_form.errors}-->
+        {% if form.errors or programa_form.errors or inversion_form.errors or metas_esperadas_form.errors or metas_reales_form.errors%}
+            <div class="alert alert-warning">
+                {{form.errors}}
+                {{programa_form.errors}}
+                <!--{{partida_form.errors}}-->
+                {{inversion_form.errors}}
+                {{metas_esperadas_form.errors}}
+                {{metas_reales_form.errors}}
+            </div>
+        {% endif %}
+    
+        <form method="post" enctype="multipart/form-data" class="form-horizontal" class="form"
+        oninput="inversion_total.value=parseFloat(recurso_internacional.value) +
+        parseFloat(recurso_federal.value) + parseFloat(recurso_estatal.value) +
+        parseFloat(recurso_municipal.value)">
+            {% csrf_token %}
+            <!--{{form.as_p}}
+            {{programa_form.as_p}}-->
+            <!--{{partida_form.as_p}}-->
+            <!--{{metas_esperadas_form.as_p}}
+            {{metas_reales_form.as_p}}-->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="id_nombre">Nombre del programa:</label>
+                        {% if form.nombre.value %}
+                        <input class="form-control input-form" type="text" name="nombre" id="id_nombre" value="{{form.nombre.value}}" placeholder="Nombre del programa">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="nombre" id="id_nombre" placeholder="Nombre del programa">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row">-->
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_anio_ejercicio_fiscal">Año Fiscal:</label>
+                        {% if form.anio_ejercicio_fiscal.value %}
+                        <input class="form-control input-form" type="number" name="anio_ejercicio_fiscal" id="id_anio_ejercicio_fiscal" value="{{form.anio_ejercicio_fiscal.value}}" placeholder="Año Fiscal">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="anio_ejercicio_fiscal" id="id_anio_ejercicio_fiscal" placeholder="Año Fiscal">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_recurso_asignado">Recurso Estatal Asignado:</label>
+                        {% if form.recurso_asignado.value %}
+                        <input class="form-control input-form" type="number" name="recurso_asignado" id="id_recurso_asignado" value="{{form.recurso_asignado.value}}" placeholder="Recurso Estatal Asignado" step="0.1" min="0" max="6000000" oninput="edValueKeyPress()">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_asignado" id="id_recurso_asignado" placeholder="Recurso Estatal Asignado" step="0.1" min="0" max="6000000" oninput="edValueKeyPress()">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_fuente">Fuente:</label>
+                        {% if form.fuente.value %}
+                        <input class="form-control input-form" type="text" name="fuente" id="id_fuente" value="{{form.fuente.value}}" placeholder="Fuente">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="fuente" id="id_fuente" placeholder="Fuente">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_capitulo">Capítulo:</label>
+                        {% if form.capitulo.value %}
+                        <input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" value="{{form.capitulo.value}}" placeholder="Capítulo">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_status">Estatus del Programa:</label>
+                        <!--<input class="form-control input-form" type="password" name="password" id="id_password" placeholder="Contraseña">-->
+                        <!--
+                        <select class="input-form form-control" id="id_status" name="status" value="{{form.status.value}}">
+                            <option value="ACT">Activo</option>
+                            <option value="INA">Inactivo</option>
+                        </select>
+                        
+                        <select class="input-form form-control" id="id_status" name="status">
+                            <option value="ACT">Activo</option>
+                            <option value="INA">Inactivo</option>
+                        </select>
+                        -->
+                        {{form.status}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_tipo_programa_p">Tipo de Programa Presupuestado:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--
+                        <select class="input-form form-control" id="id_tipo_programa_p" name="tipo_programa_p" value="{{form.tipo_programa_p.value}}">
+                            <option value="APO">Apoyo</option>
+                            <option value="SER">Servicio</option>
+                            <option value="FOM">Fomento</option>
+                        </select>
+                        
+                        <select class="input-form form-control" id="id_tipo_programa_p" name="tipo_programa_p">
+                            <option value="APO">Apoyo</option>
+                            <option value="SER">Servicio</option>
+                            <option value="FOM">Fomento</option>
+                        </select>-->
+                        {{form.tipo_programa_p}}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Inversión</h3>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_internacional">Recurso Internacional:</label>
+                        {% if inversion_form.recurso_internacional.value %}
+                        <input class="form-control input-form"  value="{{inversion_form.recurso_internacional.value}}" type="number" name="recurso_internacional" id="id_recurso_internacional" placeholder="Recurso Internacional" step="0.01" min="0" max="6000000">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_internacional" id="id_recurso_internacional" placeholder="Recurso Internacional" step="0.01" min="0" max="6000000" value="0">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_federal">Recurso Federal:</label>
+                        {% if inversion_form.recurso_federal.value %}
+                        <input class="form-control input-form" type="number" name="recurso_federal" id="id_recurso_federal" placeholder="Recurso Federal" step="0.01" min="0" max="6000000" value="{{inversion_form.recurso_federal.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_federal" id="id_recurso_federal" placeholder="Recurso Federal" step="0.01" min="0" max="6000000" value="0">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_estatal">Recurso Estatal:</label>
+                        {% if inversion_form.recurso_estatal.value %}
+                        <input class="form-control input-form" type="number" name="recurso_estatal" id="id_recurso_estatal" placeholder="Recurso Estatal" step="0.01" min="0" max="6000000" value="{{inversion_form.recurso_estatal.value}}" readonly>
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_estatal" id="id_recurso_estatal" placeholder="Recurso Estatal" step="0.01" min="0" max="6000000" value="0" readonly>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_municipal">Recurso Municipal:</label>
+                        {% if inversion_form.recurso_municipal.value %}
+                        <input class="form-control input-form" type="number" name="recurso_municipal" id="id_recurso_municipal" placeholder="Recurso Municipal" step="0.01" min="0" max="6000000" value="{{inversion_form.recurso_municipal.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="recurso_municipal" id="id_recurso_municipal" placeholder="Recurso Municipal" step="0.01" min="0" max="6000000" value="0">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_inversion_total">Inversión Total:</label>
+                        {% if inversion_form.inversion_total.value %}
+                        <input class="form-control input-form" type="number" name="inversion_total" id="id_recurso_estatal" placeholder="Inversión total" step="0.01" min="0" max="6000000" value="{{inversion_form.inversion_total.value}}" readonly>
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="inversion_total" id="id_recurso_estatal" placeholder="Inversión total" step="0.01" min="0" max="6000000" value="0" readonly>
+                        <!--<output class="form-control input-form" name="inversion_total" id="id_inversion_total"
+                        for="recurso_internacional recurso_federal recurso_estatal recurso_municipal"></output>-->
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_beneficiario">Nombre del beneficiario:</label>
+                        {% if inversion_form.beneficiario.value %}
+                        <input class="form-control input-form" type="text" name="beneficiario" id="id_beneficiario" placeholder="Nombre del beneficiario" value="{{inversion_form.beneficiario.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="text" name="beneficiario" id="id_beneficiario" placeholder="Nombre del beneficiario">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Metas Programadas</h3>
+
+            <div class="form-row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_actividades">No. Actividades:</label>
+                        {% if metas_esperadas_form.numero_actividades.value %}
+                        <input class="form-control input-form" type="number" name="numero_actividades" id="id_numero_actividades" placeholder="No. actividades" value="{{metas_esperadas_form.numero_actividades.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_actividades" id="id_numero_actividades" placeholder="No. actividades">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_beneficiarios">No. Beneficiarios:</label>
+                        {% if metas_esperadas_form.numero_beneficiarios.value %}
+                        <input class="form-control input-form" type="number" name="numero_beneficiarios" id="id_numero_beneficiarios" placeholder="No. beneficiarios" value="{{metas_esperadas_form.numero_beneficiarios.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_beneficiarios" id="id_numero_beneficiarios" placeholder="No. beneficiarios">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_hombres">Hombres:</label>
+                        {% if metas_esperadas_form.numero_hombres.value %}
+                        <input class="form-control input-form" type="number" name="numero_hombres" id="id_numero_hombres" placeholder="No. hombres" value="{{metas_esperadas_form.numero_hombres.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_hombres" id="id_numero_hombres" placeholder="No. hombres">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_mujeres">Mujeres:</label>
+                        {% if metas_esperadas_form.numero_mujeres.value %}
+                        <input class="form-control input-form" type="number" name="numero_mujeres" id="id_numero_mujeres" placeholder="No. mujeres" value="{{metas_esperadas_form.numero_mujeres.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_mujeres" id="id_numero_mujeres" placeholder="No. mujeres">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_edad">Rango de Edad:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--<select class="form-control" id="id_edad">-->
+                        {{metas_esperadas_form.edad}}
+                        <!--<select class="input-form form-control" id="id_edad" name="edad">
+                            <option value="NAD">Niños y Adolescentes (11-17 años)</option>
+                            <option value="JOV">Jóvenes (18 a 29 años)</option>
+                            <option value="ADU">Adultos (30+ años)</option>
+                        </select>-->
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Metas Reales</h3>
+
+            <div class="form-row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_actividades_r">No. Actividades:</label>
+                        {% if metas_reales_form.numero_actividades_r.value %}
+                        <input class="form-control input-form" type="number" name="numero_actividades_r" id="id_numero_actividades_r" placeholder="No. actividades" value="{{metas_reales_form.numero_actividades_r.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_actividades_r" id="id_numero_actividades_r" placeholder="No. actividades">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_beneficiarios_r">No. Beneficiarios:</label>
+                        {% if metas_reales_form.numero_beneficiarios_r.value %}
+                        <input class="form-control input-form" type="number" name="numero_beneficiarios_r" id="id_numero_beneficiarios_r" placeholder="No. beneficiarios" value="{{metas_reales_form.numero_beneficiarios_r.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_beneficiarios_r" id="id_numero_beneficiarios_r" placeholder="No. beneficiarios">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_hombres_r">Hombres:</label>
+                        {% if metas_reales_form.numero_hombres_r.value %}
+                        <input class="form-control input-form" type="number" name="numero_hombres_r" id="id_numero_hombres_r" placeholder="No. hombres" value="{{metas_reales_form.numero_hombres_r.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_hombres_r" id="id_numero_hombres_r" placeholder="No. hombres">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_mujeres_r">Mujeres:</label>
+                        {% if metas_reales_form.numero_mujeres_r.value %}
+                        <input class="form-control input-form" type="number" name="numero_mujeres_r" id="id_numero_mujeres_r" placeholder="No. mujeres" value="{{metas_reales_form.numero_mujeres_r.value}}">
+                        {% else %}
+                        <input class="form-control input-form" type="number" name="numero_mujeres_r" id="id_numero_mujeres_r" placeholder="No. mujeres">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-form">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_edad_r">Rango de Edad:</label>
+                        {{metas_reales_form.edad_r}}
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--<select class="form-control" id="id_edad_r">-->
+                        <!--<select class="input-form form-control" id="id_edad_r" name="edad_r">
+                            <option value="NAD">Niños y Adolescentes (11-17 años)</option>
+                            <option value="JOV">Jóvenes (18 a 29 años)</option>
+                            <option value="ADU">Adultos (30+ años)</option>
+                        </select>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-centrado">
+                <button type="submit" class="btn-form">Guardar Programa</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock contenido %}
+
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+    <script type="text/javascript">
+        function edValueKeyPress() {
+          var id_recurso_asignado = document.getElementById('id_recurso_asignado');
+          var s = id_recurso_asignado.value;
+
+          var id_recurso_estatal = document.getElementById('id_recurso_estatal');
+          id_recurso_estatal.value = s;
+        }
+    </script>
+{% endblock scripts %}

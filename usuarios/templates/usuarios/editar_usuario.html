@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Editar cuenta de usuario
+{% endblock titulo %}
+
+{% block contenido %}
+
+    <div class="color_seccion">
+
+        <h2 class="titulo-formulario">Editar cuenta de usuario</h2>
+        
+        {% if form.errors or admin_form.errors %}
+            <div class="alert alert-warning">
+                {{form.errors}}
+                {{admin_form.errors}}
+            </div>
+        {% endif %}
+        
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p id="mensaje">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--{{form.as_p}}
+            {{administrativo_form.as_p}}-->
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="id_nombre">Nombre(s)</label>
+                        <input class="form-control input-form" type="text" name="nombre" id="id_nombre" value="{{admin.nombre}}" placeholder="Nombre">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="id_primer_apellido">Primer apellido</label>
+                        <input class="form-control input-form" type="text" name="primer_apellido" id="id_primer_apellido" value="{{admin.primer_apellido}}"  placeholder="Primer apellido">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="id_segundo_apellido">Segundo apellido</label>
+                        <input class="form-control input-form" type="text" name="segundo_apellido" id="id_segundo_apellido" value="{{admin.segundo_apellido}}"  placeholder="Segundo apellido">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="id_foto">Fotografía</label>
+                        <input class="form-control input-form" type="file" name="foto" id="id_foto" placeholder="Fotografía" value="{{admin.foto}}" >
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="id_telefono">Teléfono</label>
+                        <input class="form-control input-form" type="text" name="telefono" id="id_telefono" placeholder="Teléfono" value="{{admin.telefono}}" >
+                    </div>
+                </div>
+            </div>
+            <div class="div-centrado">
+                <button id="btnGuardarCambios" type="submit" class="btn-form">Guardar cambios</button>
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock contenido %}
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+{% endblock scripts %}

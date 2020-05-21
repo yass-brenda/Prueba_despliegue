@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+    Editar Programa
+{% endblock titulo %}
+
+{% block contenido %}
+    
+    <!--<h2 class="aex">Editar Programa</h2>-->
+
+    <div class="color_seccion">
+            <h2 class="titulo-formulario">Editar Programa</h2>
+    
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p id="mensaje">{{message}}</p>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        <!--{form.errors or partida_form_c.errors or programa_form.errors or metas_esperadas_form.errors or metas_reales_form.errors}-->
+        {% if form.errors or programa_form.errors or inversion_form or metas_esperadas_form.errors or metas_reales_form.errors %}
+            <div class="alert alert-warning">
+                {{form.errors}}
+                {{programa_form.errors}}
+                <!--{{partida_form_c.errors}}-->
+                {{inversion_form.errors}}
+                {{metas_esperadas_form.errors}}
+                {{metas_reales_form.errors}}
+            </div>
+        {% endif %}
+
+        
+        <!--<form method="post" class="form-horizontal">-->
+            <!--{% csrf_token %}-->
+            <!--{{form.as_p}}-->
+            <!--{{programa_form.as_p}}-->
+            <!--{{partida_form_c.as_p}}-->
+            <!--{{metas_esperadas_form.as_p}}-->
+            <!--{{metas_reales_form.as_p}}-->
+            <!--<button type="submit" class="btn btn-primary">Guardar Programa</button>-->
+        <!--</form>-->
+
+        <form method="post" enctype="multipart/form-data" class="form-horizontal"
+        oninput="inversion_total.value=parseFloat(recurso_internacional.value) +
+        parseFloat(recurso_federal.value) + parseFloat(recurso_estatal.value) +
+        parseFloat(recurso_municipal.value)">
+            {% csrf_token %}
+            <!--{{form.as_p}}
+            {{programa_form.as_p}}-->
+            <!--{{partida_form.as_p}}-->
+            <!--{{metas_esperadas_form.as_p}}
+            {{metas_reales_form.as_p}}-->
+
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="id_nombre">Nombre del programa:</label>
+                        <!--<input class="form-control input-form" type="text" name="nombre" id="id_nombre" placeholder="Nombre del programa">-->
+                        {{programa_form.nombre}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_anio_ejercicio_fiscal">Año Fiscal:</label>
+                        <!--<input class="form-control input-form" type="number" name="anio_ejercicio_fiscal" id="id_anio_ejercicio_fiscal" placeholder="Año Fiscal">-->
+                        {{programa_form.anio_ejercicio_fiscal}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_recurso_asignado">Recurso Estatal Asignado:</label>
+                        <!--<input class="form-control input-form" type="number" name="recurso_asignado" id="id_recurso_asignado" placeholder="Recurso Estatal Asignado" step="0.1" min="0" max="6000000">-->
+                        {{programa_form.recurso_asignado}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_fuente">Fuente:</label>
+                        <!--<input class="form-control input-form" type="text" name="fuente" id="id_fuente" placeholder="Fuente">-->
+                        {{programa_form.fuente}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_capitulo">Capítulo:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        {{programa_form.capitulo}}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_status">Estatus del Programa:</label>
+                        <!--<input class="form-control input-form" type="password" name="password" id="id_password" placeholder="Contraseña">-->
+                        <!--<select class="form-control" id="id_status">
+                            <option value="ACT">Activo</option>
+                            <option value="INA">Inactivo</option>
+                        </select>-->
+                        {{programa_form.status}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_tipo_programa_p">Tipo de Programa Presupuestado:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--<select class="form-control" id="id_tipo_programa_p">
+                            <option value="APO">Apoyo</option>
+                            <option value="SER">Servicio</option>
+                            <option value="FOM">Fomento</option>
+                        </select>-->
+                        {{programa_form.tipo_programa_p}}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Inversión</h3>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_internacional">Recurso Internacional:</label>
+                        <!--<input class="form-control input-form" type="number" name="recurso_internacional" id="id_recurso_internacional" placeholder="Recurso Internacional" step="0.1" min="0" max="6000000">-->
+                        {{inversion_form.recurso_internacional}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_federal">Recurso Federal:</label>
+                        <!--<input class="form-control input-form" type="number" name="recurso_federal" id="id_recurso_federal" placeholder="Recurso Federal" step="0.1" min="0" max="6000000">-->
+                        {{inversion_form.recurso_federal}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_estatal">Recurso Estatal:</label>
+                        <!--<input class="form-control input-form" type="number" name="recurso_estatal" id="id_recurso_estatal" placeholder="Recurso Estatal" step="0.1" min="0" max="6000000">-->
+                        {{inversion_form.recurso_estatal}}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_recurso_municipal">Recurso Municipal:</label>
+                        <!--<input class="form-control input-form" type="number" name="recurso_municipal" id="id_recurso_municipal" placeholder="Recurso Municipal" step="0.1" min="0" max="6000000">-->
+                        {{inversion_form.recurso_municipal}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_inversion_total">Inversión Total:</label>
+                        <!--<input class="form-control input-form" type="number" name="inversion_total" id="id_recurso_estatal" placeholder="Inversión total" step="0.1" min="0" max="6000000">-->
+                        {{inversion_form.inversion_total}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_beneficiario">Nombre del beneficiario:</label>
+                        <!--<input class="form-control input-form" type="text" name="beneficiario" id="id_beneficiario" placeholder="Nombre del beneficiario">-->
+                        {{inversion_form.beneficiario}}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Metas Programadas</h3>
+
+            <div class="form-row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_actividades">No. Actividades:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_actividades" id="id_numero_actividades" placeholder="No. actividades">-->
+                        {{metas_esperadas_form.numero_actividades}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_beneficiarios">No. Beneficiarios:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_beneficiarios" id="id_numero_beneficiarios" placeholder="No. beneficiarios">-->
+                        {{metas_esperadas_form.numero_beneficiarios}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_hombres">Hombres:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_hombres" id="id_numero_hombres" placeholder="No. hombres">-->
+                        {{metas_esperadas_form.numero_hombres}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_mujeres">Mujeres:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_mujeres" id="id_numero_mujeres" placeholder="No. mujeres">-->
+                        {{metas_esperadas_form.numero_mujeres}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_edad">Rango de Edad:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--<select class="form-control" id="id_edad">
+                            <option value="NAD">Niños y Adolescentes (11-17 años)</option>
+                            <option value="JOV">Jóvenes (18 a 29 años)</option>
+                            <option value="ADU">Adultos (30+ años)</option>
+                        </select>-->
+                        {{metas_esperadas_form.edad}}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="titulo-formulario">Metas Reales</h3>
+
+            <div class="form-row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_actividades_r">No. Actividades:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_actividades_r" id="id_numero_actividades_r" placeholder="No. actividades">-->
+                        {{metas_reales_form.numero_actividades_r}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_beneficiarios_r">No. Beneficiarios:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_beneficiarios_r" id="id_numero_beneficiarios_r" placeholder="No. beneficiarios">-->
+                        {{metas_reales_form.numero_beneficiarios_r}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_hombres_r">Hombres:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_hombres_r" id="id_numero_hombres_r" placeholder="No. hombres">-->
+                        {{metas_reales_form.numero_hombres_r}}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_numero_mujeres_r">Mujeres:</label>
+                        <!--<input class="form-control input-form" type="number" name="numero_mujeres_r" id="id_numero_mujeres_r" placeholder="No. mujeres">-->
+                        {{metas_reales_form.numero_mujeres_r}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="id_edad_r">Rango de Edad:</label>
+                        <!--<input class="form-control input-form" type="text" name="capitulo" id="id_capitulo" placeholder="Capítulo">-->
+                        <!--<select class="form-control" id="id_edad_r">
+                            <option value="NAD">Niños y Adolescentes (11-17 años)</option>
+                            <option value="JOV">Jóvenes (18 a 29 años)</option>
+                            <option value="ADU">Adultos (30+ años)</option>
+                        </select>-->
+                        {{metas_reales_form.edad_r}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-centrado">
+                <button type="submit" class="btn-form">Guardar Programa</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock contenido %}
+
+{% block scripts %}
+    <script src="{% static "js/funciones.js" %}"></script>
+    <script type="text/javascript">
+        function edValueKeyPress() {
+          var id_recurso_asignado = document.getElementById('id_recurso_asignado');
+          var s = id_recurso_asignado.value;
+
+          var id_recurso_estatal = document.getElementById('id_recurso_estatal');
+          id_recurso_estatal.value = s;
+        }
+    </script>
+{% endblock scripts %}
