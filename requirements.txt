@@ -27,7 +27,7 @@ mysqlclient==1.4.6
 numpy==1.17.2
 parse==1.12.1
 parse-type==0.5.2
-Pillow==6.2.1
+Pillow==8.3.2
 plac==0.9.6
 ply==3.9
 preshed==3.0.2
