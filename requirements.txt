@@ -24,7 +24,7 @@ keyrings.alt==1.3
 mccabe==0.6.1
 murmurhash==1.0.2
 mysqlclient==1.4.6
-numpy==1.17.2
+numpy==1.22.0
 parse==1.12.1
 parse-type==0.5.2
 Pillow==6.2.1
